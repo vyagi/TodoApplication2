@@ -1,0 +1,5 @@
+<ul>
+    @for (todo of todos; track $index) {
+    <li> {{ todo }} <span (click)="todoRemoveClicked($index)">x</span> </li>
+    }
+</ul>
