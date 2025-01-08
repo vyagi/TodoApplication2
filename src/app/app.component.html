@@ -1,3 +1,3 @@
-<app-todo-list [todos]="todoList" (todoRemoved)="removeTodo($event)"></app-todo-list>
+<app-todo-list [todos]="todoList" (todoRemoved)="removeTodo($event)" (todoCompleted)="updateTodo($event)"></app-todo-list>
 
 <input [(ngModel)]="newTodo"> <button (click)="addNewTodo()">Add</button>

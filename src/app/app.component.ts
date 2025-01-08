@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { TodoListComponent } from './todo-list/todo-list.component';
-import { TodoService } from './todo.service';
+import { Todo, TodoService } from './todo.service';
 
 @Component({
   selector: 'app-root',
@@ -12,23 +12,39 @@ import { TodoService } from './todo.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  todoList: string[] = [];
+  todoList: Todo[] = [];
 
   constructor(private todoService: TodoService) {}
 
   ngOnInit() {
-    this.todoList = this.todoService.getTodos();
+    this.refreshTodo();
   }
 
   newTodo = "";
   addNewTodo() {
     if(this.newTodo) {
-      this.todoService.addTodo(this.newTodo);
+      this.todoService.addTodo(this.newTodo).subscribe(response => {
+        this.refreshTodo();
+      });
       this.newTodo = "";
     }
   }
 
-  removeTodo(index: number) {
-    this.todoService.removeTodo(index);
+  updateTodo(todo: Todo) {
+    this.todoService.updateTodo(todo).subscribe(response => {
+      this.refreshTodo();
+    });
+  }
+
+  removeTodo(todo: Todo) {
+    this.todoService.removeTodo(todo).subscribe(response => {
+      this.refreshTodo();
+    });
+  }
+
+  refreshTodo() {
+    this.todoService.getTodos().subscribe(response => {
+      this.todoList = response;
+    });
   }
 }

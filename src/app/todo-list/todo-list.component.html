@@ -1,5 +1,5 @@
 <ul>
     @for (todo of todos; track $index) {
-    <li> {{ todo }} <span (click)="todoRemoveClicked($index)">x</span> </li>
+    <li> {{ todo.name }}  <input type="checkbox" (change)="todoCompletedClicked(todo)" [(ngModel)]="todo.completed"> <span (click)="todoRemoveClicked(todo)">x</span> </li>
     }
 </ul>
